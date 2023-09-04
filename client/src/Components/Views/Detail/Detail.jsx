@@ -26,19 +26,21 @@ const Detail = () => {
       </div>
       <div className={style.info}>
         <h2>{name}</h2>
-        <p>Brand: {brand}</p>
+        <p>Marca: {brand}</p>
         <p>{description}</p>
-        <p>Price: {price}</p>
+        <p>Precio: {price}</p>
         <p>Stock: {stock}</p>
-        <p>Year: {model}</p>
-        <button className={style.btn}>Buy</button>
+        <p>Año: {model}</p>
+        <button className={style.button}>Comprar</button>
 
-        <div className={style.btnOut}>
+
+      </div>
+      <div className={style.btnOut}>
+
           <NavLink to="/home">
             <button>x</button>
           </NavLink>
         </div>
-      </div>
     </div>
   );
 };
