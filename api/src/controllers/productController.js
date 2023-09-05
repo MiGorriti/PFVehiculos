@@ -5,51 +5,51 @@ const ProductController = {
 
     // Crea un nuevo producto (automovil)
 
-    async create(req, res) {
-        try{
-            const productsInput = Array.isArray(req.body) ? req.body : [req.body];
-            const products = [];
+    // async create(req, res) {
+    //     try{
+    //         const productsInput = Array.isArray(req.body) ? req.body : [req.body];
+    //         const products = [];
 
-            for (const productInput of productsInput){
-                // crear un nuevo producto
-                const newProduct = await Product.create(productInput);
+    //         for (const productInput of productsInput){
+    //             // crear un nuevo producto
+    //             const newProduct = await Product.create(productInput);
 
-                // obtener categorias del producto
-                const categories = productInput.category;
+    //             // obtener categorias del producto
+    //             const categories = productInput.category;
 
-                if ( categories && categories.length > 0 ){
-                    // buscar las categorias en la base de datos
-                    const categoriesExistentes = await Category.findAll({
-                        where: {
-                            name: categories
-                        }
-                    });
+    //             if ( categories && categories.length > 0 ){
+    //                 // buscar las categorias en la base de datos
+    //                 const categoriesExistentes = await Category.findAll({
+    //                     where: {
+    //                         name: categories
+    //                     }
+    //                 });
 
-                     // Filtrar categoria que no existen en la base de datos
-                     const categoriessNoExistentes = categories.filter(
-                        gen => !categoriesExistentes.map(g => g.name).includes(gen)
-                    );
+    //                  // Filtrar categoria que no existen en la base de datos
+    //                  const categoriessNoExistentes = categories.filter(
+    //                     gen => !categoriesExistentes.map(g => g.name).includes(gen)
+    //                 );
 
-                    // Crear nuevos géneros
-                    const newCategories = await Category.bulkCreate(
-                        categoriessNoExistentes.map(name => ({ name })),
-                        { returning: true }
-                    );
+    //                 // Crear nuevos géneros
+    //                 const newCategories = await Category.bulkCreate(
+    //                     categoriessNoExistentes.map(name => ({ name })),
+    //                     { returning: true }
+    //                 );
 
-                    // Asociar géneros con el libro
-                    await newProduct.setCategories([...categoriesExistentes, ...newCategories]);
-                }
+    //                 // Asociar géneros con el libro
+    //                 await newProduct.setCategories([...categoriesExistentes, ...newCategories]);
+    //             }
 
-                products.push(newProduct);
+    //             products.push(newProduct);
                 
-            }
+    //         }
 
-            res.status(201).json(products);
+    //         res.status(201).json(products);
 
-        } catch (error) {
-            res.status(400).json({ mensaje: "Error al crear nuevos productos", error });
-        }
-    },
+    //     } catch (error) {
+    //         res.status(400).json({ mensaje: "Error al crear nuevos productos", error });
+    //     }
+    // },
 
 
     // Actualiza un producto (automovil)
@@ -113,7 +113,6 @@ const ProductController = {
             res.status(500).json({ mensaje: 'Error al obtener los productos', error });
         }
     }
-
      
 }
 
