@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_CARS, GET_DETAIL } from './typeAction';
+import { GET_CARS, GET_DETAIL,ORDER_BY_NAME,ORDER_BY_PRICE } from './typeAction';
 
 export const getCars = () => {
   return async function (dispatch) {
@@ -35,13 +35,27 @@ export const getDetail = (idCar)=>{
 }
 
 
-export function postVehiculo(state){
-    return async function(dispatch){
-        try {
-            const response = await axios.post("http://localhost:3001/update/product", state)
-            alert("Se publico correctamente.")
-        } catch (error) {
-            console.log(error)
-        }
-    }
+// export function postVehiculo(state){
+//     return async function(dispatch){
+//         try {
+//             const response = await axios.post("http://localhost:3001/update/product", state)
+//             alert("Se publico correctamente.")
+//         } catch (error) {
+//             console.log(error)
+//         }
+//     }
+// }
+
+export const OrderByName = (payload)=>{
+  return{
+    type: ORDER_BY_NAME,
+    payload
+  }
+}
+
+export const OrderByPrice = (payload)=>{
+  return{
+    type: ORDER_BY_PRICE,
+    payload
+  }
 }

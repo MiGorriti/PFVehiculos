@@ -1,26 +1,42 @@
-import React, { useState, useEffect } from "react";
+
+=======
 import { useSelector } from "react-redux";
 import Card from "./Card/Card";
 import "./styles.css";
+import Page from "../Views/Paginado/Page";
+import { useEffect, useState } from "react";
 
 const CardsContainer = ({ currentPage }) => {
   const cars = useSelector((state) => state.cars);
-  const [cardsPerPage] = useState(12);
-
+  const [cardsPerPage, setCardsPerPage] = useState(12);
+ 
   const lastIndex = currentPage * cardsPerPage;
   const firstIndex = lastIndex - cardsPerPage;
+  const searchResults = useSelector((state) => state.onSearch);
+  let displayedCars =
+    searchResults && searchResults.length > 0 ? searchResults : cars;
 
-  // Si hay menos de 12 tarjetas, se mostrarán todas en una página.
-  const displayedCars =
-    cars.length <= cardsPerPage ? cars : cars.slice(firstIndex, lastIndex);
+  const carsToRender = displayedCars.slice(firstIndex, lastIndex);
+  console.log(firstIndex);
+  useEffect(() => {
+    if (searchResults.length === 0) {
+
+    }
+  }, [searchResults]);
 
   return (
-    <div className="cards">
-      {displayedCars?.map((car) => (
-        <Card key={car.id} id={car.id} image={car.image} name={car.name} />
-      ))}
+    <div>
+      <div className="cards">
+        {carsToRender?.map((car) => (
+          <Card key={car.id} id={car.id} image={car.image} name={car.name} />
+        ))}
+      </div>
+      <div>
+
+      </div>
     </div>
   );
 };
 
 export default CardsContainer;
+

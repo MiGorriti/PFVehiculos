@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./Home.module.css";
-
+import Page from '../Paginado/Page'
 import Cards from "../../Cards/Cards";
-import { getCars } from "../../../redux/action/action";
+import { OrderByName, OrderByPrice, getCars } from "../../../redux/action/action";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Page from "../Paginado/Page";
+
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -16,40 +16,56 @@ export default function Home() {
     dispatch(getCars());
   }, []);
 
-  const [startPag, setStartPag] = useState(0);
-  const [endPag, setEndPag] = useState(5);
+  const [order, setOrder] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const actPag = cars.slice(startPag, endPag);
-  const cantCars = cars.length;
 
-  const next = () => {
-    if (endPag <= cantCars - 1) {
-      setStartPag(endPag);
-      setEndPag(endPag + 5);
-    } else {
-      alert("Fin del catálogo");
-    }
+
+  const handleOrderByName = (e) =>{
+    e.preventDefault();
+    dispatch(OrderByName(e.target.value))
+    setOrder(`Ordenado${e.target.value}`)
+  }
+  const handleOrderByPrice = (e) =>{
+    e.preventDefault();
+    dispatch(OrderByPrice(e.target.value))
+    setOrder(`Ordenado${e.target.value}`)
+  }
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
-  const prev = () => {
-    if (startPag > 1) {
-      setStartPag(setStartPag - 5);
-      setEndPag(endPag - 5);
-    } else {
-      alert("Estás en la primera página");
-    }
-  };
+
 
   return (
     <div className={styles.container}>
       <div>
+        {/* <select ></select> */}
+        <div className={styles.container_filters}>
+        <select onChange={handleOrderByName}>
+          <option value="Default">Default </option>
+          <option value="A-Z">A - Z</option>
+          <option value="Z-A">Z - A</option>
+        </select>
+        <select onChange={handleOrderByPrice}>
+        <option value="Default"> Default </option>
+        <option value="max_price">Max Price</option>
+        <option value="min_price">Min Price</option>
+        </select>
+        </div>
         <div>
           <h2 className={styles.SubTitle}>Todos los vehículos</h2>
         </div>
-        <Cards />
+        <Cards currentPage={currentPage}/>
       </div>
       <div className={styles.page}>
-        <Page prev={prev} next={next} />
+
+      <Page
+  cardsPerPage={15}
+  currentPage={currentPage}
+  setCurrentPage={setCurrentPage} // Pasa setCurrentPage como prop
+  totalCars={cars.length}
+/>
       </div>
     </div>
   );
