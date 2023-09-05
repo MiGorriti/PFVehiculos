@@ -13,7 +13,6 @@ import SignUp from"./Components/Singup/SingUp"
 function App() {
   return (
     <BrowserRouter>
-      <div className="Title">IGNITE MOTORS</div>
       <Navbar />
       <main className="background">
         <Routes>
