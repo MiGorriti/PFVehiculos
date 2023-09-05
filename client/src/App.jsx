@@ -10,7 +10,6 @@ import About from "./Components/Views/About/About";
 function App() {
   return (
     <BrowserRouter>
-      <div className="Title">IGNITE MOTORS</div>
       <Navbar />
       <main className="background">
         <Routes>
