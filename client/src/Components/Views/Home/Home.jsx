@@ -6,7 +6,7 @@ import { OrderByName, OrderByPrice, getCars } from "../../../redux/action/action
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
+//
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -14,9 +14,9 @@ export default function Home() {
   const cars = useSelector((state) => state.cars);
   useEffect(() => {
     dispatch(getCars());
-  }, []);
-
-  const [order, setOrder] = useState("");
+  }, [dispatch]);
+// eslint-disable-next-line
+  const [_order, setOrder] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -31,6 +31,7 @@ export default function Home() {
     dispatch(OrderByPrice(e.target.value))
     setOrder(`Ordenado${e.target.value}`)
   }
+   // eslint-disable-next-line
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
